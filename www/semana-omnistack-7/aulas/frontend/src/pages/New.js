@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import './New.css'
-import api from '../services/api'
+import React, { Component } from 'react';
+import './New.css';
+import api from '../services/api';
 
 class New extends Component {
     state = {
@@ -14,6 +14,8 @@ class New extends Component {
     handleSubmit = async e => {
         e.preventDefault()
         
+        console.log(this.state);
+
         const data = new FormData();
 
         data.append('image', this.state.image)
@@ -22,7 +24,7 @@ class New extends Component {
         data.append('description', this.state.description)
         data.append('hashtag', this.state.hashtag)
 
-        await api.post('/posts', data)
+        await api.post('http://localhost:3333/posts', data)
 
         this.props.history.push('/')
     }

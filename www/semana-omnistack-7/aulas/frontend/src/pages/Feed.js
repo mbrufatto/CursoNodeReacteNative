@@ -18,8 +18,7 @@ class Feed extends Component {
     async componentDidMount() {
         this.registerToSocket();
 
-        const response = await api.get('/posts')
-        {console.log(response)}
+        const response = await api.get('http://localhost:3333/posts')
 
         this.setState({ feed: response.data })
     }  
@@ -41,13 +40,12 @@ class Feed extends Component {
     }
 
     handleLike = id => {
-        api.post(`/posts/${id}/like`)
+        api.post(`posts/${id}/like`)
     }
 
     render() {
         return (
             <section id="post-list">
-
                 {this.state.feed.map(post => (
                     <article key={post._id}>
                     <header>
@@ -59,7 +57,7 @@ class Feed extends Component {
                         <img src={more} alt="Mais" />
                     </header>
 
-                    <img src={`http://localhost:3333/files/background.png${post.image}`} />
+                    <img src={`http://localhost:3333/files/${post.image}`} />
                     <footer>
                         <div className="actions">
                             <button type="button" onClick={() => this.handleLike(post._id)}>

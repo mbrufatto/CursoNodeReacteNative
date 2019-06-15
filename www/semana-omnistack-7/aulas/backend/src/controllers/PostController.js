@@ -10,6 +10,8 @@ module.exports = {
     },
 
     async store(req, res) {
+        console.log(req.body)
+
         const { author, place, description, hashtags } = req.body
         const { filename: image } = req.file
 
@@ -19,13 +21,13 @@ module.exports = {
         await sharp(req.file.path)
             .resize(500)
             .jpeg({ quality: 70 })
-            .toflile(
-                path.resolve(require.file.destination, 'resized', filename)
+            .toFile(
+                path.resolve(req.file.destination, 'resized', fileName)
             )
         fs.unlinkSync(req.file.path)
 
         const post = await Post.create({
-            author, place, description, hashtags, filename
+            author, place, description, hashtags, image: fileName
         })
 
         req.io.emit('post', post)
